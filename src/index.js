@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //Rutas
 app.use('/noticias',require('./routes/noticias.routes'));
+app.use('/login', require('./routes/user.routes'));
 
 app.listen(port, (error) => {
     if (error) {
