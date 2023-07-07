@@ -11,15 +11,17 @@ Controller.userLogin = async (req, res) => {
         // Recibimos las credenciales del formulario
         const { username, password } = req.body;
 
+        console.log(`${username} ${password}`);
         //Buscamos el usuario por username
         const user = await User.findOne({ username });
 
+        console.log(user);
+
         // Validación de usuario y contraseña
-        if (user.username === username && user.password === password) {
+        if (user && password === user.password) {
             // Firma del token
             const payload = ({ userID: user._id });
             const token = jwt.sign(payload, JwtKey, { expiresIn: '2d' });
-
             // Respuesta satisfactoria
             res.status(201).json({ login: true, token, username, name: user.name });
 

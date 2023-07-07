@@ -7,6 +7,7 @@ const port = process.env.PORT || 3000;
 const morgan = require('morgan');
 const database = require('./database/db.database');
 
+
 //logs
 app.use(morgan('dev'));
 
@@ -15,7 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //Rutas
-app.use('/noticias',require('./routes/noticias.routes'));
+app.use('/admin', require('./routes/admin.routes'));
+app.use('/noticias', require('./routes/noticias.routes'));
 app.use('/login', require('./routes/user.routes'));
 
 app.listen(port, (error) => {
