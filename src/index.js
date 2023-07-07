@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //Rutas
-app.use('/obtener_noticias',require('./routes/noticias.routes'));
+app.use('/noticias',require('./routes/noticias.routes'));
 
 app.listen(port, (error) => {
     if (error) {

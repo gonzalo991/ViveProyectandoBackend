@@ -16,6 +16,7 @@ Controller.getNoticias = async (req, res) => {
 
 // Controlador para agregar una nueva noticia
 Controller.addNoticias = async (req, res) => {
+    // Manejo de errores
     try {
         // Obtenemos los datos del body
         const { titulo, subtitulo, reseña, texto, autor } = req.body;
@@ -30,10 +31,58 @@ Controller.addNoticias = async (req, res) => {
         res.status(200).json("Noticia publicada");
 
     } catch (error) {
-        // Manejo de errores
-        console.error(error.message(`Ocurrió un error al cargar la noticia: ${error}`))
+        // Enviamos el estado del error junto con un mensaje
+        res.status(404).json(error.message(`Ocurrió un error al agregar la noticias: ${error}`));
+
     } finally {
+
+        // Confirmamos que la función esta funcionando a pesar de los errores
         console.log("Se usó la función addNoticias");
+
+    }
+}
+
+// Controlador para editar una noticia
+Controller.editNoticia = async (req, res) => {
+    try {
+        // Recibimos los parametros del formulario
+        const { titulo, subtitulo, reseña, texto, autor } = req.body;
+
+        //Creamos una lista con los valores que recibimos del formulario
+        const editar_noticia = { titulo, subtitulo, reseña, texto, autor };
+        console.log(editar_noticia)
+        //Realizamos la consulta a la base de datos enviando el id para poder modificar el documento
+        await Noticias.findByIdAndUpdate(req.params.id, editar_noticia);
+
+        res.status(200).json("Noticia actualizada"); // Devolvemos un estado de confirmación de la consulta
+
+
+    } catch (error) {
+        //Devuelvo el estado del error junto con el mensaje
+        res.status(404).json(error.message(`Ocurrió un error al editar la noticias: ${error}`));
+
+        // Imprimo el mensaje por consola
+        console.error(error.message(`Ocurrió un error al editar la noticias: ${error}`));
+
+    } finally {
+
+        // Imprimo un mensaje por consola para confirmar que la función funciona correctamente
+        console.log("Se utilizo la función editNoticia");
+
+    }
+}
+
+//Función para borrar una noticia
+Controller.deleteNoticia = async (req, res) => {
+    try {
+        await Noticias.findByIdAndDelete(req.params.id);
+        res.status(200).json("Noticia borrada correctamente");
+
+    } catch (error) {
+        res.status(404).json(error.message(`Ocurrió un error al borrar la notica: ${error}`));
+        console.error(`Ocurrió un error al borrar la notica: ${error}`);
+    } finally {
+        console.log("Se utilizó la función borrar noticia");
     }
 }
 
