@@ -1,5 +1,5 @@
 const Controller = {} // Declaramos una lista de controladores
-const Noticias = require(); // Importamos el modelo de la base de datos
+const Noticias = require('../models/noticias.model'); // Importamos el modelo de la base de datos
 
 // Controlador para obtener las noticias de la base de datos
 Controller.getNoticias = async (req, res) => {
@@ -13,7 +13,6 @@ Controller.getNoticias = async (req, res) => {
         console.log("Se usó la función getNoticias");
     }
 }
-
 
 // Controlador para agregar una nueva noticia
 Controller.addNoticias = async (req, res) => {

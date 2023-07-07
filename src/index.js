@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './.env' });
 const port = process.env.PORT || 3000;
 const morgan = require('morgan');
+const database = require('./database/db.database');
 
 //logs
 app.use(morgan('dev'));
@@ -14,9 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //Rutas
-app.get((req, res) => {
-    res.send('Página del servidor por default');
-})
+app.use('/obtener_noticias',require('./routes/noticias.routes'));
 
 app.listen(port, (error) => {
     if (error) {
