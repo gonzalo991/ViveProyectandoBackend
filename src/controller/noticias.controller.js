@@ -15,6 +15,20 @@ Controller.getNoticias = async (req, res) => {
     }
 }
 
+// Controlador para obtener una sola noticia
+Controller.getOneNew = async (req, res) => {
+    try {
+
+        const noticia = await Noticias.findById(req.params.id);
+        res.status(202).json(noticia);
+
+    } catch (error) {
+        res.status(400).json(`No se encontró la noticia: ${error}`);
+    } finally {
+        console.log("Se utilizó el componente getOneNew");
+    }
+}
+
 // Controlador para agregar una nueva noticia
 Controller.addNoticias = async (req, res) => {
     // Manejo de errores

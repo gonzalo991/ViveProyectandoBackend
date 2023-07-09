@@ -8,6 +8,7 @@ const upload = multer({ dest: 'uploads/' }); // Configuramos Multer para guardar
 
 // Declaración de rutas
 router.get('/', Controller.getNoticias); // Ruta para obtener las noticias
+router.get('/:id', Controller.getOneNew);
 router.post('/agregar_noticia', Authentication, upload.single('image'), Controller.addNoticias); // Ruta para agregar nuevas noticias
 router.post('/editar_noticia/:id', Authentication, Controller.editNoticia); // Ruta para editar noticias
 router.delete('/borrar_noticia/:id', Authentication, Controller.deleteNoticia); // Ruta para borrar una noticia
