@@ -6,6 +6,7 @@ const NoticiasSchema = new Schema({
     subtitulo: { type: String },
     reseña: { type: String },
     texto: { type: String },
+    image: { data: Buffer, contentType: String },
     autor: { type: String }
 });
 

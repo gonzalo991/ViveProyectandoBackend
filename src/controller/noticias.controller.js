@@ -1,5 +1,6 @@
 const Controller = {} // Declaramos una lista de controladores
 const Noticias = require('../models/noticias.model'); // Importamos el modelo de la base de datos
+const fs = require('fs'); // Importamos el módulo fs para poder leer el archivo de la imagen
 
 // Controlador para obtener las noticias de la base de datos
 Controller.getNoticias = async (req, res) => {
@@ -21,14 +22,27 @@ Controller.addNoticias = async (req, res) => {
         // Obtenemos los datos del body
         const { titulo, subtitulo, reseña, texto, autor } = req.body;
 
+        const imagen = fs.readFileSync(req.file.path);
+        const encImg = imagen.toString('base64');
+
         // guardamos los datos en un objeto Noticias
-        const agregar_noticia = new Noticias({ titulo, subtitulo, reseña, texto, autor });
+        const agregar_noticia = new Noticias({
+            titulo,
+            subtitulo,
+            reseña,
+            texto,
+            autor,
+            image: {
+                data: Buffer.from(encImg, 'base64'),
+                contentType: req.file.mimetype
+            }
+        });
 
         // Enviamos y guardamos el objeto en la base de datos
-        await agregar_noticia.save();
+        const noticia = await agregar_noticia.save();
 
         // Devolvemos un estado 200 y un mensaje
-        res.status(200).json("Noticia publicada");
+        res.status(200).json(`Noticia publicada \n${noticia}`);
 
     } catch (error) {
         // Enviamos el estado del error junto con un mensaje
