@@ -1,0 +1,149 @@
+/* Home Css */
+.home_section {
+    display: block;
+
+    margin: 1rem 0.1rem;
+}
+
+.home_articles {
+    width: 100vw;
+}
+
+.card_container {
+    margin-bottom: 2rem;
+}
+
+/* Bio Css */
+.desciption {
+    width: 100vw;
+    display: block !important;
+}
+
+.description_title {
+    font-size: 1.rem;
+    font-weight: 600;
+}
+
+.bio_img {
+    width: 100vw;
+    height: 40vh;
+
+    margin-top: 1rem;
+
+    border-radius: 15px;
+
+    box-shadow: 5px 7px 7px -2px rgba(0, 0, 0, 0.69);
+    -webkit-box-shadow: 5px 7px 7px -2px rgba(0, 0, 0, 0.69);
+    -moz-box-shadow: 5px 7px 7px -2px rgba(0, 0, 0, 0.69);
+}
+
+/*Detalle de las noticias*/
+.noticia_title {
+    font-size: 2.1rem;
+    font-weight: 700;
+}
+
+.noticia_description {
+    font-size: 1.1rem;
+}
+
+.noticia_hour {
+    font-size: 0.9rem;
+    color: #fff;
+    background-color: rgb(38, 96, 222);
+    border: solid 2px #000;
+    border-radius: 5px;
+}
+
+.noticia_img {
+    height: 50vh;
+    width: 60vw;
+}
+
+.comentarios_title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+
+@media(min-width: 769px) {
+    .home_section {
+        display: flex;
+
+        margin: 3rem 1rem 0 1rem;
+    }
+
+    .home_articles {
+        width: 70vw;
+    }
+
+    .home_aside {
+        width: 30vw;
+    }
+
+    .description {
+        display: flex;
+        flex-direction: column;
+        align-self: flex-end;
+    }
+
+    .bio_img {
+        width: 30vw;
+        height: 80vh;
+    }
+
+    .description_title {
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+
+    .description_text {
+        margin-top: 2vh;
+        font-size: 1.1rem;
+        text-indent: 25px;
+    }
+
+    /*Detalle de noticias*/
+}
+
+
+
+
+/*Footer Css*/
+.footer {
+    height: 25vh;
+
+    margin-top: 3vh;
+}
+
+.footer_ul {
+
+    list-style: none;
+
+    font-size: 1rem;
+}
+
+.footer_titles {
+    font-size: 1rem;
+}
+
+.footer_links {
+    color: #000;
+}
+
+.footer_icon {
+    font-size: 1.7rem;
+}
+
+.facebook {
+    color: blue;
+}
+
+.instagram {
+    color: #c471ed;
+}
+
+.twitter {
+    color: lightskyblue;
+}

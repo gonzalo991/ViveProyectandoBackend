@@ -2,8 +2,7 @@
 const Controller = require('../controller/noticias.controller');
 const router = require('express').Router();
 const { Authentication } = require('../middlewares/jwt.middleware');
-const multer = require('multer'); // Importamos Multer, un middleware para manejar archivos en multipart/form-data
-const upload = multer({ dest: 'uploads/' }); // Configuramos Multer para guardar los archivos en la carpeta 'uploads'
+const upload = require('../middlewares/multer.middleware');
 
 
 // Declaración de rutas
