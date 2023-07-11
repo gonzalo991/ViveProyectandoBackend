@@ -1,36 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import { MdDeleteForever } from 'react-icons/md';
-import { AiFillEdit } from 'react-icons/ai';
 import axios from 'axios';
 import { swAlert } from '@sweetalert/with-react';
 import { useNavigate } from 'react-router-dom';
+import EditForm from '../links/EditarForm';
+import AddForm from '../links/AgregarNoticia';
 
 
 const Admin = () => {
 
     const [noticias, setNoticias] = useState([]);
     const navigate = useNavigate();
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2NGE4NThmZDUzMWRjNzJhOTM4ZDMxZDMiLCJpYXQiOjE2ODg5Mzc3ODcsImV4cCI6MTY4OTExMDU4N30.7cce2zEvr5Il_3Z4zNb88TwQ17yhIDWEx-J6-TFzRcE";
-
 
     useEffect(() => {
+
+        let token = sessionStorage.getItem('token');
+
+        console.log(token)
+
+        if (!token || token === null) {
+            navigate('/');
+        }
+
         const endPoint = "/noticias";
         axios.get(endPoint).then(response => {
             const data = response.data;
             console.log(data);
             setNoticias(data);
-        }
-        )
-    }, [])
-
-    const handleEdit = (id) => {
-        const endPoint = `/noticias/editar_noticia/${id}`;
-        axios.put(endPoint, {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
+        }).catch(error => {
+            swAlert(<h5>Tuvimos un error, vuelve más tarde</h5>)
         })
-    }
+    }, [navigate])
+
 
     { /* const handleDelete = (id) => {
         const endPoint = `/noticias/borrar_noticia/${id}`;
@@ -50,11 +51,13 @@ const Admin = () => {
     return (
         <>
             <div className="container mt-5 mb-5">
-                <h1 className='text-center mt-5 mb-5'>Panel de Administrador</h1>
+                <h1 className='text-center mt-5 mb-5' style={{ fontSize: "1.9rem", textDecoration: "underline" }}>Panel de Administrador</h1>
             </div>
 
-            <div className="container mt-5">
-                <table class="table table-stripped table-hover">
+            <AddForm />
+
+            <div className="container mt-5 mb-5">
+                <table className="table table-stripped table-hover">
                     <thead>
                         <tr>
                             <th scope="col">Id Noticia</th>
@@ -64,21 +67,22 @@ const Admin = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            {
-                                noticias.map(noticia => {
-                                    return (
-                                        <>
-                                            <th scope="row">{noticia._id}</th>
+                        {
+                            noticias.map(noticia => {
+                                const tokenSession = sessionStorage.getItem('token');
+                                return (
+                                    <>
+                                        <tr>
+                                            <th>{noticia._id}</th>
                                             <td>{noticia.titulo}</td>
                                             <td>{noticia.autor}</td>
-                                            <td><button type="button" class="btn btn-danger me-3"><MdDeleteForever className='mb-1' /></button>
-                                                <button type="button" class="btn btn-warning"><AiFillEdit className='mb-1' /></button></td>
-                                        </>
-                                    )
-                                })
-                            }
-                        </tr>
+                                            <td><button type="button" className="btn btn-danger me-3"><MdDeleteForever className='mb-1' /></button>
+                                                <EditForm noticia={noticia} token={tokenSession} /></td>
+                                        </tr>
+                                    </>
+                                )
+                            })
+                        }
                     </tbody>
                 </table>
             </div>

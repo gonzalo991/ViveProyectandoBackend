@@ -2,13 +2,21 @@ import React, { useState } from 'react';
 import SwAlert from '@sweetalert/with-react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { AiFillEdit } from 'react-icons/ai';
 
-const Form = () => {
+const EditForm = ({ noticia, token }) => {
 
-    let query = new URLSearchParams(window.location.search);
-    let id_noticia = query.get('id_noticia');
+    const id_noticia = noticia._id;
+    const { titulo, subtitulo, autor, texto } = noticia;
 
     const navigate = useNavigate();
+
+    const [nuevaNoticia, setNuevaNoticia] = useState({
+        titulo: titulo,
+        subtitulo: subtitulo,
+        autor: autor,
+        texto: texto
+    });
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -20,62 +28,66 @@ const Form = () => {
         setIsOpen(false);
     };
 
+    const handleChange = (ev) => {
+
+        const { name, value } = ev.target;
+
+        setNuevaNoticia({
+            ...nuevaNoticia,
+            [name]: value
+        });
+
+    }
 
     const handleSubmit = (ev) => {
-        const id_noticia_comentario = id_noticia;
-        const nombre = ev.target.nombre.value;
-        const apellido = ev.target.apellido.value;
-        const comentario = ev.target.comentario.value;
 
-        if (nombre === null || nombre === undefined) {
-            SwAlert(<h4>Debes ingresar tu nombre</h4>)
-            return;
-        }
-
-        if (apellido === null || apellido === undefined) {
-            SwAlert(<h4>Debes ingresar tu apellido</h4>)
-            return;
-        }
-
-        if (comentario === null || comentario === undefined) {
-            SwAlert(<h4>Debes agregar tu comentario</h4>)
-            return;
-        }
-
-        console.log('vamos a enviar el comentario');
-
-        axios.post('', { id_noticia_comentario, nombre, apellido, comentario })
+        axios.put(`/noticias/editar_noticia/${id_noticia}`, nuevaNoticia, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
             .then(response => {
-                SwAlert(<h4>Comentario publicado exitosamente</h4>)
+                SwAlert(<h4>Noticia publicada exitosamente</h4>)
                 navigate(`/detalle?id_noticia=${id_noticia}`)
+            }).catch(error => {
+                console.error(`Ocurrió un error: ${error}`);
             })
     }
 
     return (
         <>
-            <button onClick={openModal} className='btn btn-success'>Comentar</button>
-            <hr />
+            <button onClick={openModal} className='btn btn-warning'><AiFillEdit className='mb-1' /></button>
+
             <div className={`modal  ${isOpen ? 'is-active' : ''}`}>
                 <div className='modal-content'>
                     <div className='container'>
                         <form className='mt-5' onSubmit={handleSubmit}>
                             <div className='row'>
                                 <div className='col-6 mt-3'>
-                                    <label className='form-label' htmlFor='nombre'>Nombre</label>
-                                    <input type='text' className='form-control' placeholder='Nombre...' name='nombre' />
+                                    <label className='form-label' htmlFor='titulo' style={{ color: "red", textDecoration: "underline" }}>Titulo</label>
+                                    <input type='text' className='form-control' value={nuevaNoticia.titulo}
+                                        onChange={handleChange} name='titulo' />
                                 </div>
 
                                 <div className='col-6 mt-3'>
-                                    <label className='form-label' htmlFor='apellido'>Apellido</label>
-                                    <input type='text' className='form-control' placeholder='Apellido...' name='apellido' />
+                                    <label className='form-label' htmlFor='subtitulo' style={{ color: "red", textDecoration: "underline" }}>Apellido</label>
+                                    <input type='text' className='form-control' value={nuevaNoticia.subtitulo}
+                                        onChange={handleChange} name='subtitulo' />
+                                </div>
+
+                                <div className='col-6 mt-3'>
+                                    <label className='form-label' htmlFor='autor' style={{ color: "red", textDecoration: "underline" }}>Autor</label>
+                                    <input type='text' className='form-control' value={nuevaNoticia.autor}
+                                        onChange={handleChange} name='autor' />
                                 </div>
                             </div>
 
                             <div className='mt-3'>
-                                <label className='form-label' htmlFor='comentario'>Comenta aquí</label>
-                                <textarea rows={10} cols={15} className='form-control' placeholder='Comentario...' name='comentario' />
+                                <label className='form-label' htmlFor='texto' style={{ color: "red", textDecoration: "underline" }}>Texto de la noticia</label>
+                                <textarea rows={15} cols={30} className='form-control' value={nuevaNoticia.texto}
+                                    onChange={handleChange} name='texto' />
                             </div>
-                            <button type='submit' className='btn btn-success mt-5'>Enviar Comentario</button>
+                            <button type='submit' className='btn btn-success mt-5'>Enviar Cambios</button>
                         </form>
                     </div>
                     <button className='btn btn-block' onClick={closeModal}>X</button>
@@ -85,4 +97,4 @@ const Form = () => {
     )
 }
 
-export default Form
+export default EditForm;

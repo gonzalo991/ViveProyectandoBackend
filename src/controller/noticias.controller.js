@@ -33,7 +33,7 @@ Controller.addNoticias = async (req, res) => {
     // Manejo de errores
     try {
         // Obtenemos los datos del body
-        const { titulo, subtitulo, texto, createdAt, autor } = req.body;
+        const { titulo, subtitulo, texto, autor } = req.body;
         const image = req.file.originalname;
 
         // guardamos los datos en un objeto Noticias
@@ -53,7 +53,7 @@ Controller.addNoticias = async (req, res) => {
 
     } catch (error) {
         // Enviamos el estado del error junto con un mensaje
-        res.status(404).json(error.message(`Ocurrió un error al agregar la noticias: ${error}`));
+        res.status(404).json(`Ocurrió un error al agregar la noticias: ${error}`);
 
     } finally {
 
@@ -70,7 +70,7 @@ Controller.editNoticia = async (req, res) => {
         const { titulo, subtitulo, texto, autor } = req.body;
 
         //Creamos una lista con los valores que recibimos del formulario
-        const editar_noticia = { titulo, subtitulo, reseña, texto, autor };
+        const editar_noticia = { titulo, subtitulo, texto, autor };
         console.log(editar_noticia)
         //Realizamos la consulta a la base de datos enviando el id para poder modificar el documento
         await Noticias.findByIdAndUpdate(req.params.id, editar_noticia);
@@ -80,10 +80,10 @@ Controller.editNoticia = async (req, res) => {
 
     } catch (error) {
         //Devuelvo el estado del error junto con el mensaje
-        res.status(404).json(error.message(`Ocurrió un error al editar la noticias: ${error}`));
+        res.status(404).json(`Ocurrió un error al editar la noticias: ${error}`);
 
         // Imprimo el mensaje por consola
-        console.error(error.message(`Ocurrió un error al editar la noticias: ${error}`));
+        console.error(`Ocurrió un error al editar la noticias: ${error}`);
 
     } finally {
 
