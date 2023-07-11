@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Login from '../links/Login';
+import jwtDecode from 'jwt-decode';
 
 const Header = () => {
+
+    const token = sessionStorage.getItem('token');
+    const navigate = useNavigate();
 
     /*Para desplegar la barra de navegación vamos a usar los estados de react con useState
     primero que nada declararé la variable isActive con un estado booleano para luego usarla
@@ -15,6 +19,11 @@ const Header = () => {
         //Cambia el valor de la variable de falso a verdadero y viceversa
         setIsActive(!isActive);
     };
+
+    const handleLogout = () => {
+        sessionStorage.clear();
+        navigate("/");
+    }
 
 
     return (
@@ -59,7 +68,14 @@ const Header = () => {
                 <div className="navbar-end">
                     <div className="navbar-item">
                         <div className="buttons">
-                            <Login />
+                            {
+                                token ?
+                                    <>
+                                        <p className="me-3 mb-2" style={{ fontSize: "1.2rem", fontWeight: "500" }}>Cristian Fonseca</p>
+                                        <button className='button is-link me-3' onClick={handleLogout}>Salir</button>
+                                    </>
+                                    :
+                                    <Login />}
                             {/**
                              *  <Link className="button is-primary" to="/login">
                                 <strong>Ingresar</strong>

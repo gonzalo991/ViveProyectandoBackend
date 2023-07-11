@@ -37,7 +37,10 @@ const Login = () => {
                 .then(response => {
                     const tokenRecibido = response.data.token;
                     sessionStorage.setItem('token', tokenRecibido)
-                    SwAlert(<h4>Vamos a redireccionarte al panel de usuario</h4>)
+                    SwAlert(<>
+                        <h4>Vamos a redireccionarte al panel de usuario</h4>
+                        <h5>Bienvenido Concejal</h5>
+                    </>)
                     navigate('/admin')
                 }).catch(error => {
                     console.error(`Ocurrio un error: ${error}`);
