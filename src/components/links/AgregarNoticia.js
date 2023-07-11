@@ -32,9 +32,8 @@ const AddForm = ({ token }) => {
             }
         })
             .then(response => {
-
+                
                 SwAlert(<h4>Noticia publicada exitosamente</h4>)
-                navigate(`/admin`)
 
             }).catch(error => {
 

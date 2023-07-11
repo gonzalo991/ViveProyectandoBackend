@@ -48,7 +48,6 @@ const EditForm = ({ noticia, token }) => {
         })
             .then(response => {
                 SwAlert(<h4>Noticia publicada exitosamente</h4>)
-                navigate(`/detalle?id_noticia=${id_noticia}`)
             }).catch(error => {
                 console.error(`Ocurrió un error: ${error}`);
             })
