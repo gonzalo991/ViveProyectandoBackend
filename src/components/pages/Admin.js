@@ -24,31 +24,12 @@ const Admin = () => {
         axios.get(endPoint).then(response => {
             const data = response.data;
             setNoticias(data);
+            console.log('Desde admin se uso get noticias');
         }).catch(error => {
             swAlert(<h5>Tuvimos un error, vuelve más tarde</h5>)
         })
-    }, [navigate, noticias])
+    }, [navigate])
 
-
-    const handleDelete = () => {
-        if (confirm("¿Seguro que deseas borrar esta noticia?")) {
-            try {
-                const endPoint = `/noticias/borrar_noticia/${id}`;
-                axios.delete(endPoint, {
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    }
-                }).then(response => {
-                    swAlert(<h5>Noticia Borrada</h5>)
-                }).catch(error => {
-                    swAlert(<h5>No se pudo borrar la noticia</h5>);
-                });
-                navigate('/admin');
-            } catch (error) {
-                console.error(`No se pudo borrar la noticia: ${error}`)
-            }
-        }
-    }
 
     return (
         <>

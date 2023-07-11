@@ -72,6 +72,7 @@ const Header = () => {
                                 token ?
                                     <>
                                         <p className="me-3 mb-2" style={{ fontSize: "1.2rem", fontWeight: "500" }}>Cristian Fonseca</p>
+                                        <Link className='button is-success me-3' to='/admin'>Panel de Noticias</Link>
                                         <button className='button is-link me-3' onClick={handleLogout}>Salir</button>
                                     </>
                                     :

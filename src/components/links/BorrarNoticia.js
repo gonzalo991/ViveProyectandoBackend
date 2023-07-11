@@ -18,6 +18,7 @@ const DeleteButton = ({ noticia }) => {
             })
                 .then(response => {
                     SwAlert(<h5>Noticia borrada con éxito</h5>);
+                    navigate('/admin');
                 })
                 .catch(error => {
                     console.error(`Se produjo un error al borrar: ${error}`);

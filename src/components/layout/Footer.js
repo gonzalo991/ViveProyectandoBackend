@@ -8,7 +8,7 @@ const Footer = () => {
             <footer className="footer">
                 <div className="content has-text-centered">
                     <p>
-                        <strong>Vive Proyectando</strong> por <a href="https://jgthms.com">Cristian Fonseca</a>. Para más información sobre
+                        <strong>Vive Proyectando</strong> por <Link to="/about">Cristian Fonseca</Link>. Para más información sobre
                         el uso de ésta página revise el <Link to="/aviso">Aviso Legal</Link>. El contenido de éste sitio tiene
                         <Link to="/politicas"> Políticas de Privacidad</Link>.
                     </p>
